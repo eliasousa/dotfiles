@@ -4,6 +4,7 @@ tap 'caskroom/eid'
 tap 'caskroom/fonts'
 tap 'caskroom/versions'
 tap 'homebrew/bundle'
+tap 'homebrew/services'
 
 # Install Binaries
 brew 'awscli'
@@ -46,8 +47,7 @@ cask 'sublime-text'
 cask 'the-unarchiver'
 cask 'vlc'
 
-# Fonts
-cask 'font-source-code-pro-for-powerline'
-cask 'font-source-code-pro'
-cask 'font-source-sans-pro'
-cask 'font-source-serif-pro'
+# To have launchd start at login:
+brew services start mysql
+brew services start postgresql
+brew services start redis
