@@ -27,6 +27,7 @@ brew 'redis'
 brew 'node'
 brew 'rbenv'
 brew 'ruby-build'
+brew 'kubernetes-cli'
 
 # Apps
 cask '1password'
