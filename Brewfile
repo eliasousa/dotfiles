@@ -28,6 +28,7 @@ brew 'node'
 brew 'rbenv'
 brew 'ruby-build'
 brew 'kubernetes-cli'
+brew 'kubernetes-helm'
 
 # Apps
 cask '1password'

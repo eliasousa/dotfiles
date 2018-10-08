@@ -13,3 +13,9 @@ alias gl="git log --oneline --decorate --color"
 c() { cd ~/Projects/jaya/$1; }
 _c() { _files  -W ~/Projects/jaya -/; }
 compdef _c c
+
+#Login Aws ECR
+lecr(){
+  eval $(aws ecr get-login --no-include-email --region us-east-1 | sed 's|https://||')
+}
+
