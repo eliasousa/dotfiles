@@ -28,4 +28,9 @@ export EDITOR="sublime"
 # Rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
+
 export TILLER_NAMESPACE="tiller"
+
+# Set Spaceship ZSH as a prompt
+autoload -U promptinit; promptinit
+prompt spaceship
