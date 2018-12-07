@@ -17,7 +17,7 @@ ZSH_CUSTOM=$DOTFILES
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-# plugins=(git git-extras history-substring-search z zsh-syntax-highlighting)
+# plugins=(git git-extras history-substring-search z zsh-syntax-highlighting zsh-autosuggestions)
 
 # Activate Oh-My-Zsh
 source $ZSH/oh-my-zsh.sh
@@ -34,3 +34,10 @@ export TILLER_NAMESPACE="tiller"
 # Set Spaceship ZSH as a prompt
 autoload -U promptinit; promptinit
 prompt spaceship
+
+#Autocomplete
+source $ZSH/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+. $HOME/.asdf/asdf.sh
+
+. $HOME/.asdf/completions/asdf.bash

@@ -49,6 +49,9 @@ cask 'sublime-text'
 cask 'the-unarchiver'
 cask 'vlc'
 
+# Fonts
+cask 'font-fira-code'
+
 # To have launchd start at login:
 brew services start mysql
 brew services start postgresql
