@@ -23,7 +23,7 @@ ZSH_CUSTOM=$DOTFILES
 source $ZSH/oh-my-zsh.sh
 
 # Editor
-export EDITOR="sublime"
+export EDITOR="code -w"
 
 # Rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"

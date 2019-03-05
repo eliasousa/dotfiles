@@ -45,7 +45,7 @@ cask 'sequel-pro'
 cask 'slack'
 cask 'spectacle'
 cask 'spotify'
-cask 'sublime-text'
+cask 'visual-studio-code'
 cask 'the-unarchiver'
 cask 'vlc'
 
