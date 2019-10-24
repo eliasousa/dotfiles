@@ -8,7 +8,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="robbyrussell"
+ZSH_THEME="spaceship"
 
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM=$DOTFILES
@@ -17,7 +17,7 @@ ZSH_CUSTOM=$DOTFILES
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-# plugins=(git git-extras history-substring-search z zsh-syntax-highlighting zsh-autosuggestions)
+plugins=(git git-extras history-substring-search z zsh-autosuggestions zsh-syntax-highlighting)
 
 # Activate Oh-My-Zsh
 source $ZSH/oh-my-zsh.sh
@@ -29,15 +29,9 @@ export EDITOR="code -w"
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
+# Aws Helm
 export TILLER_NAMESPACE="tiller"
 
-# Set Spaceship ZSH as a prompt
-autoload -U promptinit; promptinit
-prompt spaceship
-
-#Autocomplete
-source $ZSH/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-
+# Active asdf
 . $HOME/.asdf/asdf.sh
-
 . $HOME/.asdf/completions/asdf.bash
