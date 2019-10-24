@@ -35,3 +35,24 @@ export TILLER_NAMESPACE="tiller"
 # Active asdf
 . $HOME/.asdf/asdf.sh
 . $HOME/.asdf/completions/asdf.bash
+
+# Spaceship theme config
+SPACESHIP_PROMPT_ORDER=(
+  dir           # Current directory section
+  host          # Hostname section
+  git           # Git section (git_branch + git_status)
+  node          # Node.js section
+  ruby          # Ruby section
+  elixir        # Elixir section
+  docker        # Docker section
+  aws           # Amazon Web Services section
+  exec_time     # Execution time
+  kubecontext   # Kubectl context section
+  line_sep      # Line break
+  battery       # Battery level and status
+  vi_mode       # Vi-mode indicator
+  jobs          # Background jobs indicator
+  exit_code     # Exit code section
+  char          # Prompt character
+)
+SPACESHIP_CHAR_SYMBOL="❯"
