@@ -46,8 +46,8 @@ SPACESHIP_PROMPT_ORDER=(
   elixir        # Elixir section
   docker        # Docker section
   aws           # Amazon Web Services section
-  exec_time     # Execution time
   kubecontext   # Kubectl context section
+  exec_time     # Execution time
   line_sep      # Line break
   battery       # Battery level and status
   vi_mode       # Vi-mode indicator
