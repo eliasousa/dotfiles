@@ -46,6 +46,7 @@ cask 'spectacle'
 cask 'spotify'
 cask 'tableplus'
 cask 'the-unarchiver'
+cask 'ubiquiti-unifi-controller'
 cask 'visual-studio-code'
 cask 'vlc'
 
