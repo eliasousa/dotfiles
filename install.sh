@@ -54,7 +54,7 @@ ln -s $HOME/.dotfiles/.mackup.cfg $HOME/.mackup.cfg
 echo "Setting macOS preferences..."
 # Set macOS preferences
 # We will run this last because this will reload the shell
-# source .macos
+source .macos
 
 echo "Installing ASDF plugins..."
 # Install ASDF plugins
