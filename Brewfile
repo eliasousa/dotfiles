@@ -1,10 +1,11 @@
 # Taps
-tap 'caskroom/cask'
-tap 'caskroom/eid'
-tap 'caskroom/fonts'
-tap 'caskroom/versions'
+tap 'homebrew/cask'
+tap 'homebrew/cask-eid'
+tap 'homebrew/cask-fonts'
+tap 'homebrew/cask-versions'
 tap 'homebrew/bundle'
 tap 'homebrew/services'
+tap 'heroku/brew'
 
 # Install Binaries
 brew 'awscli'
@@ -13,7 +14,7 @@ brew 'bat'
 brew 'coreutils' # Those that come with macOS are outdated
 brew 'git'
 brew 'grep'
-brew 'heroku-toolbelt'
+brew 'heroku'
 brew 'mackup'
 brew 'openssl'
 brew 'libffi'
@@ -46,14 +47,8 @@ cask 'spectacle'
 cask 'spotify'
 cask 'tableplus'
 cask 'the-unarchiver'
-cask 'ubiquiti-unifi-controller'
 cask 'visual-studio-code'
 cask 'vlc'
 
 # Fonts
 cask 'font-fira-code'
-
-# To have launchd start at login:
-brew services start mysql
-brew services start postgresql
-brew services start redis

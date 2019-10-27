@@ -16,9 +16,15 @@ echo "Installing Brew dependencies..."
 brew tap homebrew/bundle
 brew bundle
 
+echo "Starting brew services..."
+# To have launchd start at login:
+brew services start mysql
+brew services start postgresql
+brew services start redis
+
 echo "Installing OhMyZsh..."
 # Install OhMyZsh
-curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 echo "Adding development directories..."
 # Create a Projects directory
@@ -48,7 +54,7 @@ ln -s $HOME/.dotfiles/.mackup.cfg $HOME/.mackup.cfg
 echo "Setting macOS preferences..."
 # Set macOS preferences
 # We will run this last because this will reload the shell
-source .macos
+# source .macos
 
 echo "Installing ASDF plugins..."
 # Install ASDF plugins

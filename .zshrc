@@ -25,16 +25,11 @@ source $ZSH/oh-my-zsh.sh
 # Editor
 export EDITOR="code -w"
 
-# Rbenv
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-
 # Aws Helm
 export TILLER_NAMESPACE="tiller"
 
 # Active asdf
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
+. /usr/local/opt/asdf/asdf.sh
 
 # Spaceship theme config
 SPACESHIP_PROMPT_ORDER=(
