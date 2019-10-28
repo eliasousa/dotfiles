@@ -8,17 +8,25 @@ tap 'homebrew/services'
 tap 'heroku/brew'
 
 # Install Binaries
+brew 'automake'
+brew 'autoconf'
 brew 'awscli'
 brew 'bash' # Bash 4
 brew 'bat'
 brew 'coreutils' # Those that come with macOS are outdated
 brew 'git'
 brew 'grep'
+brew 'gpg'
 brew 'heroku'
 brew 'mackup'
 brew 'openssl'
+brew 'readline'
+brew 'unixodbc'
+brew 'unzip'
 brew 'libffi'
 brew 'libyaml'
+brew 'libtool'
+brew 'libxslt'
 brew 'pkg-config' # https://github.com/driesvints/dotfiles/issues/20
 brew 'tree'
 

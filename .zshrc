@@ -30,6 +30,7 @@ export TILLER_NAMESPACE="tiller"
 
 # Active asdf
 . /usr/local/opt/asdf/asdf.sh
+. /usr/local/opt/asdf/etc/bash_completion.d/asdf.bash
 
 # Spaceship theme config
 SPACESHIP_PROMPT_ORDER=(
