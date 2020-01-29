@@ -35,8 +35,6 @@ brew 'asdf'
 brew 'mysql'
 brew 'postgres'
 brew 'redis'
-brew 'kubernetes-cli'
-brew 'kubernetes-helm'
 
 # Apps
 cask '1password'
