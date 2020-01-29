@@ -10,7 +10,6 @@ tap 'heroku/brew'
 # Install Binaries
 brew 'automake'
 brew 'autoconf'
-brew 'awscli'
 brew 'bash' # Bash 4
 brew 'bat'
 brew 'coreutils' # Those that come with macOS are outdated
