@@ -19,18 +19,14 @@ ZSH_CUSTOM=$DOTFILES
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git git-extras history-substring-search z zsh-autosuggestions zsh-syntax-highlighting)
 
+# Active asdf
+export ASDF_DIR=$(brew --prefix asdf)
+
 # Activate Oh-My-Zsh
 source $ZSH/oh-my-zsh.sh
 
 # Editor
 export EDITOR="code -w"
-
-# Aws Helm
-export TILLER_NAMESPACE="tiller"
-
-# Active asdf
-. /usr/local/opt/asdf/asdf.sh
-. /usr/local/opt/asdf/etc/bash_completion.d/asdf.bash
 
 # Spaceship theme config
 SPACESHIP_PROMPT_ORDER=(
@@ -53,3 +49,7 @@ SPACESHIP_PROMPT_ORDER=(
 )
 SPACESHIP_CHAR_SYMBOL="❯"
 SPACESHIP_CHAR_SUFFIX=" "
+
+#Path for sdkman
+export SDKMAN_DIR="/Users/eliasousa/.sdkman"
+[[ -s "/Users/eliasousa/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/eliasousa/.sdkman/bin/sdkman-init.sh"

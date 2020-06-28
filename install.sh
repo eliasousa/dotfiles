@@ -18,9 +18,9 @@ brew bundle
 
 echo "Starting brew services..."
 # To have launchd start at login:
-brew services start mysql
-brew services start postgresql
-brew services start redis
+# brew services start mysql
+# brew services start postgresql
+# brew services start redis
 
 echo "Installing OhMyZsh..."
 # Install OhMyZsh
