@@ -17,7 +17,7 @@ ZSH_CUSTOM=$DOTFILES
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git git-extras history-substring-search z zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git git-extras history-substring-search z zsh-autosuggestions zsh-syntax-highlighting asdf)
 
 # Activate Oh-My-Zsh
 source $ZSH/oh-my-zsh.sh
@@ -45,6 +45,3 @@ SPACESHIP_PROMPT_ORDER=(
 )
 SPACESHIP_CHAR_SYMBOL="❯"
 SPACESHIP_CHAR_SUFFIX=" "
-
-# ASDF
-. /usr/local/opt/asdf/asdf.sh
