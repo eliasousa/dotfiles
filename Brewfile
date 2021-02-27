@@ -1,6 +1,5 @@
 # Taps
 tap 'homebrew/cask'
-tap 'homebrew/cask-eid'
 tap 'homebrew/cask-fonts'
 tap 'homebrew/cask-versions'
 tap 'homebrew/bundle'
@@ -37,11 +36,8 @@ brew 'redis'
 
 # Apps
 cask '1password'
-cask 'dash'
 cask 'discord'
 cask 'docker'
-cask 'brave-browser'
-cask 'google-backup-and-sync'
 cask 'insomnia'
 cask 'iterm2'
 cask 'muzzle'
@@ -52,7 +48,6 @@ cask 'slack'
 cask 'spectacle'
 cask 'spotify'
 cask 'tableplus'
-cask 'the-unarchiver'
 cask 'visual-studio-code'
 cask 'vlc'
 

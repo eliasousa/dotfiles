@@ -1,5 +1,5 @@
 # Shortcuts
-alias copyssh="pbcopy < $HOME/.ssh/id_rsa.pub"
+alias copyssh="pbcopy < $HOME/.ssh/id_ed25519.pub"
 alias reloadcli="source $HOME/.zshrc"
 alias dotfiles="cd ~/.dotfiles"
 

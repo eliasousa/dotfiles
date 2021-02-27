@@ -18,9 +18,9 @@ brew bundle
 
 echo "Starting brew services..."
 # To have launchd start at login:
-# brew services start mysql
+brew services start mysql
+brew services start redis
 # brew services start postgresql
-# brew services start redis
 
 echo "Installing OhMyZsh..."
 # Install OhMyZsh
@@ -51,14 +51,14 @@ echo "Setting up mackup..."
 # Symlink the Mackup config file to the home directory
 ln -s $HOME/.dotfiles/.mackup.cfg $HOME/.mackup.cfg
 
-echo "Setting macOS preferences..."
+# echo "Setting macOS preferences..."
 # Set macOS preferences
 # We will run this last because this will reload the shell
-source .macos
+# source .macos
 
 echo "Installing ASDF plugins..."
 # Install ASDF plugins
 asdf plugin-add ruby
-asdf plugin-add elixir
-asdf plugin-add erlang
 asdf plugin-add nodejs
+# asdf plugin-add elixir
+# asdf plugin-add erlang
