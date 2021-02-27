@@ -14,3 +14,6 @@ export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 
 # Load custom commands
 export PATH="$DOTFILES/bin:$PATH"
+
+# Mysql 5.7
+export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
