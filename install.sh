@@ -8,6 +8,12 @@ if test ! $(which brew); then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
+echo "Installing OhMyZsh..."
+# Check for Oh My Zsh and install if we don't have it
+if test ! $(which omz); then
+  /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/HEAD/tools/install.sh)"
+fi
+
 # Update Homebrew recipes
 brew update
 
@@ -16,15 +22,11 @@ echo "Installing Brew dependencies..."
 brew tap homebrew/bundle
 brew bundle
 
-echo "Starting brew services..."
+# echo "Starting brew services..."
 # To have launchd start at login:
-brew services start mysql
-brew services start redis
+# brew services start mysql
+# brew services start redis
 # brew services start postgresql
-
-echo "Installing OhMyZsh..."
-# Install OhMyZsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 echo "Setup asdf"
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf
@@ -40,15 +42,18 @@ echo "Replacing .zshrc..."
 rm -rf $HOME/.zshrc
 ln -s $HOME/.dotfiles/.zshrc $HOME/.zshrc
 
+# Path to your dotfiles installation.
+export DOTFILES=$HOME/.dotfiles
+
 echo "Installing zsh plugins..."
 # Clone oh-my-zsh plugins
-git clone https://github.com/zsh-users/zsh-autosuggestions "$DOTFILES/plugins/zsh-autosuggestions"
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$DOTFILES/plugins/zsh-syntax-highlighting"
+sudo git clone https://github.com/zsh-users/zsh-autosuggestions "$DOTFILES/plugins/zsh-autosuggestions"
+sudo git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$DOTFILES/plugins/zsh-syntax-highlighting"
 
 echo "Installing zsh spaceship theme..."
 # Clone and setup oh-my-zsh theme
-git clone https://github.com/denysdovhan/spaceship-prompt.git "$DOTFILES/themes/spaceship-prompt"
-ln -s "$DOTFILES/themes/spaceship-prompt/spaceship.zsh-theme" "$DOTFILES/themes/spaceship.zsh-theme"
+sudo git clone https://github.com/denysdovhan/spaceship-prompt.git "$DOTFILES/themes/spaceship-prompt"
+sudo ln -s "$DOTFILES/themes/spaceship-prompt/spaceship.zsh-theme" "$DOTFILES/themes/spaceship.zsh-theme"
 
 echo "Setting up mackup..."
 # Symlink the Mackup config file to the home directory
