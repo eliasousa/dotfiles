@@ -13,3 +13,18 @@ alias gl="git log --oneline --decorate --color"
 c() { cd ~/Projects/jaya/$1; }
 _c() { _files  -W ~/Projects/jaya -/; }
 compdef _c c
+
+# Docker Compose OpsLevel
+dc_up_opslevel() {
+  c OpsLevel;
+  docker-compose -f ./docker-compose/opslevel.yml up -d;
+}
+
+dc_down_opslevel(){
+  c OpsLevel;
+  docker-compose -f ./docker-compose/opslevel.yml down;
+}
+
+# Apple Silicon
+alias a="arch -x86_64"
+alias ibrew="arch -x86_64 brew"
