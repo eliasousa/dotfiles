@@ -17,7 +17,7 @@ ZSH_CUSTOM=$DOTFILES
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git git-extras history-substring-search z zsh-autosuggestions zsh-syntax-highlighting asdf)
+plugins=(git git-extras history-substring-search z zsh-autosuggestions zsh-syntax-highlighting)
 
 # Activate Oh-My-Zsh
 source $ZSH/oh-my-zsh.sh
@@ -51,3 +51,5 @@ export DISABLE_SPRING=true
 
 # Apple Silicon
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+
+. /usr/local/opt/asdf/libexec/asdf.sh

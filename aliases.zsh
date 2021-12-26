@@ -25,6 +25,11 @@ dc_down_opslevel(){
   docker-compose -f ./docker-compose/opslevel.yml down;
 }
 
+# Ngrok Opslevel
+ngrok_opslevel(){
+  ngrok http -subdomain=opslevel-elias 5000
+}
+
 # Apple Silicon
 alias a="arch -x86_64"
 alias ibrew="arch -x86_64 brew"

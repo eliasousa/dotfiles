@@ -19,7 +19,7 @@ brew 'unzip'
 brew 'pkg-config' # https://github.com/driesvints/dotfiles/issues/20
 
 # Development
-brew 'asdf'
+ibrew 'asdf'
 brew 'heroku'
 
 # Apps
@@ -30,11 +30,10 @@ cask 'insomnia'
 cask 'iterm2'
 cask 'muzzle'
 cask 'polymail'
-cask 'recordit'
 cask 'slack'
 cask 'spectacle'
 cask 'spotify'
-cask 'tableplus'
+# cask 'tableplus'
 cask 'visual-studio-code'
 cask 'vlc'
 

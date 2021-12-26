@@ -66,7 +66,7 @@ ln -s $HOME/.dotfiles/.mackup.cfg $HOME/.mackup.cfg
 
 echo "Installing ASDF plugins..."
 # Install ASDF plugins
-asdf plugin-add ruby
-asdf plugin-add nodejs
+a asdf plugin-add ruby # via rosetta
+a asdf plugin-add nodejs # via rosetta
 # asdf plugin-add elixir
 # asdf plugin-add erlang
