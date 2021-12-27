@@ -8,6 +8,12 @@ if test ! $(which brew); then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
+echo "Installing Brew for rosetta..."
+# Check for Homebrew and install if we don't have it
+if test ! $(which arch -x86_64 brew); then
+  arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
 echo "Installing OhMyZsh..."
 # Check for Oh My Zsh and install if we don't have it
 if test ! $(which omz); then
@@ -28,8 +34,8 @@ brew bundle
 # brew services start redis
 # brew services start postgresql
 
-echo "Setup asdf"
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+echo "Setup asdf for rosetta"
+arch -x86_64 brew install asdf
 
 echo "Adding development directories..."
 # Create a Projects directory
@@ -59,14 +65,9 @@ echo "Setting up mackup..."
 # Symlink the Mackup config file to the home directory
 ln -s $HOME/.dotfiles/.mackup.cfg $HOME/.mackup.cfg
 
-# echo "Setting macOS preferences..."
-# Set macOS preferences
-# We will run this last because this will reload the shell
-# source .macos
-
 echo "Installing ASDF plugins..."
 # Install ASDF plugins
-a asdf plugin-add ruby # via rosetta
-a asdf plugin-add nodejs # via rosetta
+arch -x86_64 asdf plugin-add ruby # via rosetta
+arch -x86_64 asdf plugin-add nodejs # via rosetta
 # asdf plugin-add elixir
 # asdf plugin-add erlang
