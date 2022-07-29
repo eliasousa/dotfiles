@@ -14,20 +14,32 @@ c() { cd ~/Projects/jaya/$1; }
 _c() { _files  -W ~/Projects/jaya -/; }
 compdef _c c
 
-# Docker Compose OpsLevel
-dc_up_opslevel() {
-  c OpsLevel;
-  docker-compose -f ./docker-compose/opslevel.yml up -d;
+# Pipefy
+# Docker Compose
+dc_up_pipefy() {
+  c pipefy-workspace/pipefy-core;
+  docker-compose -f docker-compose.yml up -d;
 }
 
-dc_down_opslevel(){
-  c OpsLevel;
-  docker-compose -f ./docker-compose/opslevel.yml down;
+dc_down_pipefy(){
+  c pipefy-workspace/pipefy-core;
+  docker-compose -f docker-compose.yml down;
 }
 
-# Ngrok Opslevel
-ngrok_opslevel(){
-  ngrok http -subdomain=opslevel-elias 5000
+# Run
+run_pipe_server() {
+  c pipefy-workspace/pipefy-core;
+  bin/rails server -p 3010
+}
+
+run_pipe_sidekiq() {
+  c pipefy-workspace/pipefy-core;
+  bin/sidekiq -C config/sidekiq.yml
+}
+
+run_pipeui() {
+  c pipefy-workspace/pipeui;
+  yarn install && yarn start
 }
 
 # Apple Silicon

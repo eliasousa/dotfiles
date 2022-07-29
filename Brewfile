@@ -4,7 +4,6 @@ tap 'homebrew/cask-fonts'
 tap 'homebrew/cask-versions'
 tap 'homebrew/bundle'
 tap 'homebrew/services'
-tap 'heroku/brew'
 
 # Install Binaries
 brew 'bash' # Latest Bash version
@@ -17,15 +16,20 @@ brew 'mackup'
 brew 'openssl'
 brew 'unzip'
 brew 'pkg-config' # https://github.com/driesvints/dotfiles/issues/20
+brew 'gpg'
+brew 'gawk'
+brew 'nvm'
+brew 'docker'
+brew 'docker-compose'
+brew 'docker-credential-helper'
+brew 'calima' # docker daemon
 
 # Development
-# brew 'asdf'
-brew 'heroku'
+brew 'postgresql'
 
 # Apps
 cask '1password'
 cask 'discord'
-cask 'docker'
 cask 'insomnia'
 cask 'iterm2'
 cask 'muzzle'

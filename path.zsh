@@ -1,19 +1,17 @@
-# Load Node global installed binaries
-export PATH="$HOME/.node/bin:$PATH"
-
-# Use project specific binaries before global ones
-export PATH="node_modules/.bin:vendor/bin:$PATH"
-
 # Make sure coreutils are loaded before system commands
-# I've disabled this for now because I only use "ls" which is
-# referenced in my aliases.zsh file directly.
-#export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 
-# Local bin directories before anything else
-export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+# Openssl
+export PATH="/opt/homebrew/opt/openssl@3/bin:$PATH"
+
+# grep
+export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
+
+# unzip
+export PATH="/opt/homebrew/opt/unzip/bin:$PATH"
+
+# krew
+export PATH="/Users/eliasousa/.krew/bin:$PATH"
 
 # Load custom commands
 export PATH="$DOTFILES/bin:$PATH"
-
-# Mysql 5.7
-export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"

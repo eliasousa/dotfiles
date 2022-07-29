@@ -8,12 +8,6 @@ if test ! $(which brew); then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-echo "Installing Brew for rosetta..."
-# Check for Homebrew and install if we don't have it
-if test ! $(which arch -x86_64 brew); then
-  arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-fi
-
 echo "Installing OhMyZsh..."
 # Check for Oh My Zsh and install if we don't have it
 if test ! $(which omz); then
@@ -34,8 +28,8 @@ brew bundle
 # brew services start redis
 # brew services start postgresql
 
-echo "Setup asdf for rosetta"
-arch -x86_64 brew install asdf
+echo "Setup asdf"
+brew install asdf
 
 echo "Adding development directories..."
 # Create a Projects directory
@@ -67,7 +61,7 @@ ln -s $HOME/.dotfiles/.mackup.cfg $HOME/.mackup.cfg
 
 echo "Installing ASDF plugins..."
 # Install ASDF plugins
-arch -x86_64 asdf plugin-add ruby # via rosetta
-arch -x86_64 asdf plugin-add nodejs # via rosetta
-# asdf plugin-add elixir
-# asdf plugin-add erlang
+asdf plugin add ruby
+# asdf plugin add nodejs
+# asdf plugin add elixir
+# asdf plugin add erlang
