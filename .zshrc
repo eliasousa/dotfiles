@@ -46,26 +46,9 @@ SPACESHIP_PROMPT_ORDER=(
 SPACESHIP_CHAR_SYMBOL="❯"
 SPACESHIP_CHAR_SUFFIX=" "
 
-# Disable Spring
-# export DISABLE_SPRING=true
-
-# NVM
-export NVM_DIR=~/.nvm
-source $(brew --prefix nvm)/nvm.sh
-
 # Apple Silicon
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 
 # ASDF
 unset ASDF_DIR #workaround
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
-
-# Pipefy
-export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
-
-# export DOCKERHOST=$(ipconfig getifaddr en4) # CABLE
-export DOCKERHOST=$(ipconfig getifaddr en0) # WIFI
-
-# Pipe Auth
-export USER_ID=$(id -u)
-export GROUP_ID=$(id -g)

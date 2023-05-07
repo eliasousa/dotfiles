@@ -20,7 +20,6 @@ brew 'gpg'
 brew 'gawk'
 brew 'nvm'
 brew 'docker'
-brew 'docker-compose'
 brew 'docker-credential-helper'
 brew 'calima' # docker daemon
 
