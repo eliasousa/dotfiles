@@ -8,7 +8,9 @@ import { View, div } from "gpui-kit";
 import { v_flex, h_flex } from "gpui-base";
 import { run, props, closeOverlay, theme, focused, spaces, exec, readTextFile, appHome } from "herdr";
 
-const ARGV = ["claude", "--model", "opus", "--effort", "high", "--disallowedTools", "Edit", "Write", "NotebookEdit"];
+// --disallowedTools takes every following word, so it goes first, as one
+// comma-separated value, and the task Herdr appends lands after --effort.
+const ARGV = ["claude", "--disallowedTools", "Edit,Write,NotebookEdit", "--model", "opus", "--effort", "high"];
 
 async function git(cwd, args, on, timeout) {
   try {
