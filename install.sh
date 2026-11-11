@@ -6,12 +6,14 @@ echo "Installing Brew..."
 # Check for Homebrew and install if we don't have it
 if test ! $(which brew); then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  (echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> /Users/eliasousa/.zprofile
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 echo "Installing OhMyZsh..."
 # Check for Oh My Zsh and install if we don't have it
 if test ! $(which omz); then
-  /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/HEAD/tools/install.sh)"
+  /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
 # Update Homebrew recipes
@@ -34,7 +36,7 @@ brew install asdf
 echo "Adding development directories..."
 # Create a Projects directory
 mkdir $HOME/Projects
-mkdir $HOME/Projects/jaya
+mkdir $HOME/Projects/syngenta
 mkdir $HOME/Projects/personal
 
 echo "Replacing .zshrc..."
@@ -55,16 +57,13 @@ echo "Installing zsh spaceship theme..."
 sudo git clone https://github.com/denysdovhan/spaceship-prompt.git "$DOTFILES/themes/spaceship-prompt"
 sudo ln -s "$DOTFILES/themes/spaceship-prompt/spaceship.zsh-theme" "$DOTFILES/themes/spaceship.zsh-theme"
 
-echo "Setting up mackup..."
-# Symlink the Mackup config file to the home directory
-ln -s $HOME/.dotfiles/.mackup.cfg $HOME/.mackup.cfg
-
 echo "Installing ASDF plugins..."
 # Install ASDF plugins
-asdf plugin add ruby
-# asdf plugin add nodejs
-# asdf plugin add elixir
-# asdf plugin add erlang
+asdf plugin add elixir
+asdf plugin add erlang
+asdf plugin add golang
+asdf plugin add python
+asdf plugin add nodejs
 
 echo "Installing Herdr config..."
 # Mods, layout and keys for Herdr (see herdr/README.md); skipped until Herdr has run once

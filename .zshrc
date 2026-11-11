@@ -32,13 +32,11 @@ SPACESHIP_PROMPT_ORDER=(
   git           # Git section (git_branch + git_status)
   node          # Node.js section
   ruby          # Ruby section
-  elixir        # Elixir section
   docker        # Docker section
   aws           # Amazon Web Services section
   exec_time     # Execution time
   line_sep      # Line break
   battery       # Battery level and status
-  vi_mode       # Vi-mode indicator
   jobs          # Background jobs indicator
   exit_code     # Exit code section
   char          # Prompt character
@@ -46,9 +44,18 @@ SPACESHIP_PROMPT_ORDER=(
 SPACESHIP_CHAR_SYMBOL="❯"
 SPACESHIP_CHAR_SUFFIX=" "
 
-# Apple Silicon
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
-
 # ASDF
-unset ASDF_DIR #workaround
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
+
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+export LANG=en_US.UTF-8
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/eliasousa/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+export PATH="$HOME/.local/bin:$PATH"
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/eliasousa/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)

@@ -6,39 +6,32 @@ tap 'homebrew/bundle'
 tap 'homebrew/services'
 
 # Install Binaries
-brew 'bash' # Latest Bash version
-brew 'coreutils' # Those that come with macOS are outdated
+brew 'coreutils'
+brew 'curl'
 brew 'git'
+brew 'pkg-config'
 brew 'grep'
-brew 'httpie'
 brew 'gnupg'
-brew 'mackup'
 brew 'openssl'
-brew 'unzip'
-brew 'pkg-config' # https://github.com/driesvints/dotfiles/issues/20
-brew 'gpg'
 brew 'gawk'
-brew 'nvm'
-brew 'docker'
-brew 'docker-credential-helper'
-brew 'calima' # docker daemon
-
-# Development
-brew 'postgresql'
+brew 'ffmpeg'
+# brew 'docker' # install via site
+# brew 'docker-credential-helper'
+# brew 'colima' # docker daemon
 
 # Apps
 cask '1password'
-cask 'discord'
-cask 'insomnia'
+cask 'postman'
 cask 'iterm2'
-cask 'muzzle'
-cask 'polymail'
 cask 'slack'
-cask 'spectacle'
 cask 'spotify'
-# cask 'tableplus' # via setuapp
+cask 'zoom'
 cask 'visual-studio-code'
-cask 'vlc'
+cask 'linear-linear'
+cask 'notion'
+# cask 'vlc'
+# cask 'muzzle'
+# cask 'tableplus' # via setuapp
 
 # Fonts
 cask 'font-fira-code'
