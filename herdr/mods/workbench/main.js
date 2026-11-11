@@ -9,7 +9,7 @@
 
 import { View, div, svg } from "gpui-kit";
 import { h_flex } from "gpui-base";
-import { run, spaces, machines, focused, theme, exec, readTextFile, notify, appHome, home, nextCommand, openOverlay } from "herdr";
+import { run, spaces, machines, focused, theme, exec, hc, panes, readTextFile, notify, appHome, home, nextCommand, openOverlay } from "herdr";
 
 // The default spaces: where a new space's terminals start on each machine
 // (null: this computer). Keys reach them as workbench.space1, workbench.space2, ...
@@ -51,6 +51,32 @@ echo "\${proj:+compose project $proj }removed"`;
 const VANISHES = 'for i in 1 2 3 4 5 6 7 8 9 10; do [ -e "$1" ] || exit 0; sleep 1; done; exit 1';
 
 const key = (machine) => machine ?? "";
+
+// The review tab's report out of its terminal text: from the last "#1" (or
+// "No findings.") to the end, without the TUI's chrome. Else the last 120 lines of text.
+const CHROME = /^\s*([›❯⏵✻✽✶✳✢·⚠※│╭╰╮╯─┃┌└┐┘]|esc to interrupt|auto mode|accept edits|plan mode|bypass permissions|\? for shortcuts|Tip: |\(disable recaps)/u;
+function findings(screen) {
+  const lines = screen.split("\n").map((l) => l.replace(/\s+$/, "").replace(/^[\s⏺●•]+(?=\S)/u, ""));
+  let start = -1;
+  for (let i = lines.length - 1; i >= 0; i--) {
+    if (/^(#1\b|No findings\.)/.test(lines[i])) {
+      start = i;
+      break;
+    }
+  }
+  const body = (start >= 0 ? lines.slice(start) : lines.slice(-120)).filter((l) => l.trim() && !CHROME.test(l));
+  return body.join("\n").trim();
+}
+
+// Where to send it: the review pane and a Claude pane of the same space.
+function reviewPanes(s) {
+  const tabs = new Map((s.tabs ?? []).map((tb) => [tb.id, tb.name]));
+  const mine = panes().filter((p) => p.terminal && tabs.has(p.tab));
+  const review = mine.find((p) => tabs.get(p.tab) === "review");
+  const claude = mine.filter((p) => p !== review && (p.app === "claude-code" || p.program?.key === "claude"));
+  const target = claude.find((p) => tabs.get(p.tab) === "claude") ?? claude[0] ?? null;
+  return { review, target };
+}
 
 // A line in ~/.config/herdr-app/data/workbench.log (what the watcher did and why).
 const LOG = `${appHome()}/data/workbench.log`;
@@ -249,6 +275,36 @@ export default class Workbench extends View {
     trace("open-pr", s.id, i.top, { devc: i.devc });
   }
 
+  // The review tab's findings, pasted into the space's Claude tab as a message.
+  applyReview(s, cx) {
+    const { review, target } = reviewPanes(s);
+    if (!review || !target || this.busy.has(s.id)) return;
+    this.busy.add(s.id);
+    cx.notify();
+    cx.spawn(async (cx) => {
+      try {
+        const r = await hc(["read", review.terminal, "--lines", "600"]);
+        const text = findings(r.stdout ?? "");
+        trace("apply-review", s.id, review.terminal, "->", target.terminal, { chars: text.length });
+        if (!text) {
+          notify({ title: "Apply review", body: "The review tab has no report yet.", level: "warning", timeout: 5000 });
+          return;
+        }
+        const message = `Apply the findings of the review below. It was written by a read-only reviewer in another tab, against this same checkout. Fix each finding in order, or say why one should not be fixed. Run the relevant tests after. Do not commit.\n\n${text}`;
+        const sent = await hc(["send", target.terminal, message]);
+        if (sent.code !== 0) {
+          notify({ title: "Apply review", body: (sent.stderr || sent.stdout || "hc send failed").split("\n")[0], level: "error", timeout: 6000 });
+          return;
+        }
+        run("tab.select", { id: target.tab });
+        notify({ title: "Apply review", body: `Sent ${text.split("\n").length} lines to the Claude tab.`, level: "success", timeout: 4000 });
+      } finally {
+        this.busy.delete(s.id);
+        cx.notify();
+      }
+    });
+  }
+
   askMerge(s) {
     const pr = this.info[s.id]?.pr;
     if (!pr) return;
@@ -376,6 +432,8 @@ export default class Workbench extends View {
         pull = [div().flex_none().px(6).text_color(t.dim).tooltip(i.prError).child("PR: ?")];
       }
       pull.push(button("pr-review", "Review", null, "Review this branch against the default branch (cmd-shift-r)", () => run("mod.open", { name: "review" }), !onDefault));
+      const { review, target } = reviewPanes(s);
+      if (review) pull.push(button("pr-apply", "Apply review", null, target ? "Send the review tab's findings to this space's Claude tab" : "Open a Claude tab in this space first", (cx) => this.applyReview(s, cx), Boolean(target) && !busy));
     }
 
     const stateColor = i?.state === "running" ? t.ansi2 : i?.state === "?" ? t.blocked : t.dim;
