@@ -65,3 +65,7 @@ asdf plugin add ruby
 # asdf plugin add nodejs
 # asdf plugin add elixir
 # asdf plugin add erlang
+
+echo "Installing Herdr config..."
+# Mods, layout and keys for Herdr (see herdr/README.md); skipped until Herdr has run once
+[ -d "$HOME/.config/herdr-app" ] && sh "$DOTFILES/herdr/install.sh" || echo "Herdr not set up yet: run herdr/install.sh after opening Herdr once"

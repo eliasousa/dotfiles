@@ -1,2 +1,4 @@
 /plugins
 /themes
+herdr/mods/*/jsconfig.json
+herdr/mods/*/*.d.ts
