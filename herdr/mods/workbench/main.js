@@ -5,7 +5,8 @@
 // "claude" tab at once: it brings the container up and runs Claude Code in
 // it. When a worktree space goes and its checkout with it (Remove worktree),
 // its dev container is taken down and removed, keeping the shared named
-// volumes. As Conductor does.
+// volumes, and its branch is deleted when nothing on it would be lost. As
+// Conductor does.
 
 import { View, div, svg } from "gpui-kit";
 import { h_flex } from "gpui-base";
@@ -26,10 +27,30 @@ const isWorktree = (folder) => Boolean(folder) && folder.replace(/\\/g, "/").inc
 // Run in a tab's interactive shell, in the checkout: the dev container comes
 // up (the first time: build, initialize, setup) and Claude Code runs inside it,
 // with $1 as its first message when given.
-const UP = "devcontainer up --workspace-folder .";
-const CLAUDE = ["sh", "-c", `${UP} && exec devcontainer exec --workspace-folder . claude`];
-const CLAUDE_WITH = (task) => ["sh", "-c", `${UP} && exec devcontainer exec --workspace-folder . claude "$1"`, "sh", task];
-const UP_ONLY = ["sh", "-c", UP];
+//
+// A tab's argv gets the core's own PATH (on omarchy: /usr/local/bin:/usr/bin:/bin,
+// without ~/.local/bin where the devcontainer CLI is), so the script runs through
+// the user's login shell. When a step fails, the tab stays open on a shell with
+// the error in view, instead of closing at once.
+//
+// BUILDX_BAKE_ENTITLEMENTS_FS=0: Docker Compose 5 always builds through bake,
+// which refuses to read the Dockerfile the devcontainer CLI generates in /tmp
+// (outside the build context) and fails a new checkout's first build with
+// 'additional privileges requested: pass "--allow=fs.read=/tmp/devcontainercli-..."'.
+//
+// SEED: .devcontainer/.env is gitignored, so a new worktree starts without the
+// local overrides of the main checkout (on Linux SSH_AUTH_SOCK_HOST, without
+// which compose cannot bind the SSH agent socket and "up" fails). A worktree
+// with no .env yet gets the main checkout's lines, minus the per-checkout keys
+// the repo's initialize.sh writes itself.
+const PER_CHECKOUT = "COMPOSE_PROJECT_NAME|APP_PORT|HOST_GIT_COMMON_DIR";
+const SEED = `main=$(git worktree list --porcelain 2>/dev/null | sed -n '1s/^worktree //p'); if [ -n "$main" ] && [ "$main" != "$PWD" ] && [ ! -f .devcontainer/.env ] && [ -f "$main/.devcontainer/.env" ]; then grep -vE '^(${PER_CHECKOUT})=' "$main/.devcontainer/.env" > .devcontainer/.env; fi`;
+const UP = `{ ${SEED}; BUILDX_BAKE_ENTITLEMENTS_FS=0 devcontainer up --workspace-folder .; }`;
+const STAY = '{ echo; echo "workbench: the dev container step failed (see above)."; exec "${SHELL:-sh}" -l; }';
+const inShell = (script, ...args) => ["sh", "-c", 'exec "${SHELL:-sh}" -lc "$0" sh "$@"', `${script} || ${STAY}`, ...args];
+const CLAUDE = inShell(`${UP} && devcontainer exec --workspace-folder . claude`);
+const CLAUDE_WITH = (task) => inShell(`${UP} && devcontainer exec --workspace-folder . claude "$1"`, task);
+const UP_ONLY = inShell(UP);
 
 // The pull request: how Claude opens one (the repo's skill), how it is merged.
 const OPEN_PR_TASK = "/open-pr";
@@ -141,7 +162,8 @@ export default class Workbench extends View {
       const mine = all.filter((s) => key(s.machine) === k);
       const seen = this.seen.get(k);
       if (!seen) {
-        this.seen.set(k, new Map(mine.map((s) => [s.id, { folder: s.folder, machine: s.machine }])));
+        this.seen.set(k, new Map(mine.map((s) => [s.id, { folder: s.folder, machine: s.machine, branch: s.branch ?? null }])));
+        for (const s of mine) if (isWorktree(s.folder)) this.remember(s, cx);
         const line = ["seed", k || "local", mine.map((s) => s.id)];
         cx.spawn(async () => trace(...line));
         continue;
@@ -154,13 +176,27 @@ export default class Workbench extends View {
         if (isWorktree(was.folder)) this.gone(was, cx);
       }
       for (const s of mine) {
-        if (seen.has(s.id)) continue;
-        seen.set(s.id, { folder: s.folder, machine: s.machine });
+        if (seen.has(s.id)) {
+          if (s.branch) seen.get(s.id).branch = s.branch;
+          continue;
+        }
+        seen.set(s.id, { folder: s.folder, machine: s.machine, branch: s.branch ?? null });
+        if (isWorktree(s.folder)) this.remember(s, cx);
         const line = ["new", s.id, s.folder, s.machine];
         cx.spawn(async () => trace(...line));
         if (isWorktree(s.folder)) this.start(s, cx);
       }
     }
+  }
+
+  // The repo a worktree space belongs to (its shared .git), kept for when the
+  // checkout is gone and its branch is to be deleted from that repo.
+  remember(s, cx) {
+    cx.spawn(async () => {
+      const r = await sh("git rev-parse --path-format=absolute --git-common-dir", { cwd: s.folder, on: s.machine, timeout: 10000 });
+      const entry = this.seen.get(key(s.machine))?.get(s.id);
+      if (r.ok && r.out && entry) entry.gitDir = r.out;
+    });
   }
 
   start(s, cx) {
@@ -190,6 +226,18 @@ export default class Workbench extends View {
         level: r.ok ? "success" : "warning",
         timeout: 6000,
       });
+      // The branch goes too, when git says nothing is lost ("branch -d": merged
+      // into its upstream or into the main checkout's HEAD). Otherwise it stays.
+      if (was.gitDir && was.branch && !DEFAULT_BRANCHES.includes(was.branch)) {
+        const b = await sh('git --git-dir="$1" branch -d "$2"', { on: was.machine, timeout: 20000, args: [was.gitDir, was.branch] });
+        trace("branch -d", was.branch, b);
+        notify({
+          title: "Branch",
+          body: b.ok ? `${was.branch}: deleted.` : `${was.branch}: kept, it has work that is not merged or pushed.`,
+          level: b.ok ? "success" : "info",
+          timeout: 6000,
+        });
+      }
       cx.notify();
     });
   }
